@@ -1,0 +1,3 @@
+neurokit2
+numpy
+pandas
