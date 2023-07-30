@@ -1,1 +1,0 @@
-from heart_package_kpfu.test import PrintTestMessage
