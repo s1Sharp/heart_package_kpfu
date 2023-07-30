@@ -1,3 +1,5 @@
 .git
 .idea/
 venv/
+heart_package_kpfu.egg-info/
+__pycache__
