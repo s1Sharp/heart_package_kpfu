@@ -1,0 +1,57 @@
+name: Python test
+
+
+on:
+  push:
+    paths:
+      - "**"
+      - "!.github/**"
+      - "!.gitignore"
+      - "!README.md"
+
+  pull_request:
+    paths:
+      - "**"
+      - "!.github/**"
+      - "!.gitignore"
+      - "!README.md"
+
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.10"]
+    env:
+      PROJECT_ROOT: "."
+      PY_EXE: "python3"
+
+    defaults:
+      run:
+        working-directory: ${{ env.PROJECT_ROOT }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Update pip
+        run: |
+              ${{ env.PY_EXE }} -m pip install --upgrade pip
+
+      - name: Install dependencies, requirements.txt
+        run: |
+              ${{ env.PY_EXE }} -m pip install -r requirements.txt
+
+      - name: Test with pytest
+        run: |
+              pytest -s -v -x tests/

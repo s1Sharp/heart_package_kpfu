@@ -16,7 +16,6 @@ def __find_max_subseq_by_cond(arr, predicate: Callable):
     result = (lidx, ridx)
     try:
         while lidx < len(arr):
-            # print(f"lidx {lidx}={arr[lidx]}, ridx {ridx}={arr[ridx]}")
             while ridx < len(arr) and predicate(arr[ridx]):
                 ridx += 1
             result = (lidx, ridx) if result[1] - result[0] < ridx - lidx else result
@@ -50,7 +49,6 @@ def ecg_quality_range(ecg_cleaned: pd.DataFrame, sampling_rate=150, min_quality:
     if method == 'zhao2018':
         return str(quality)
     quality_q = np.array(quality).min() + ((np.array(quality).max() - np.array(quality).min()) * min_quality / 100)
-    print(f"qiality = {quality_q}")
     result = __find_max_subseq_by_cond(quality, lambda x: int(x) > int(quality_q))
 
     return result
