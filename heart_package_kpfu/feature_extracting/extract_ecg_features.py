@@ -42,11 +42,10 @@ def process_prepared_ecg_data(ecg_data, sampling_rate = default_sampling_rate, i
     return tuple([fig, (signals, info), (peaks, peak_info), fig_hrv, hrv_data_final])
 
 
-
 def full_prepare_ecg_data(ecg_file_path: str = "./Cardio/1.1.csv", interpolate_step=2, interpolate_method='index'):
     x = load_cardio_data(ecg_file_path)
     sr = calculate_sampling_rate(x)
     x = convert_ecg_data_from_pixel_to_mhz(x)
     x = prepare_ecg_data(x)
     x = interpolate_heart_data(x, interpolate_step, interpolate_method)
-    return process_prepared_ecg_data(x, sr, interpolate_step)
+    return x, sr
